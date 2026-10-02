@@ -36,7 +36,17 @@
   - `rich_menu_2500x1686.jpg`（壓縮版）
 - [x] 提供完整的 LINE Official Account Manager 圖文選單 6 區塊動作設定對照表。
 
-### 4. 專案工程化與標準化
+### 4. 前端動態與動效極致優化 (Emil Kowalski Design Engineering & Mobile Native)
+- [x] **自訂貝茲曲線 (Custom Cubic-Bezier Easing)**：全站引入 `--ease-out`、`--ease-in-out`、`--ease-spring`，移除原生效能較差的慢速 ease。
+- [x] **按鈕與晶片按壓回饋 (`:active`)**：為所有 `button`、`button.ghost`、`.chips button` 加入 `transform: scale(0.97)` 即時按壓物理觸感。
+- [x] **日曆節次格子點擊動效**：`td.cell` 增加 `transform: scale(0.96)` 微互動與柔和外框，加強選取時的回饋感。
+- [x] **防止觸控黏著 (`@media (hover: hover) and (pointer: fine)`)**：解決手機/平板瀏覽器點擊後 `:hover` 樣式卡住未清除的問題。
+- [x] **消除行動裝置點擊灰斑**：全站配置 `-webkit-tap-highlight-color: transparent` 與 `touch-action: manipulation`，消除 300ms 延遲與閃爍。
+- [x] **狀態訊息平滑淡入滑動**：預約提示文字從生硬抽換改為 70ms translateY 與 opacity 平滑過渡。
+- [x] **卡片微差入場動效 (Stagger Entry)**：頂部宣傳橫幅與卡片採 40~150ms 階梯式滑入，畫面更生動精緻。
+- [x] **無障礙支援 (`prefers-reduced-motion`)**：偵測使用者系統動態偏好，必要時自動關閉所有位移動畫。
+
+### 5. 專案工程化與標準化
 - [x] 建立 `.gitignore` 排除所有敏感金鑰憑證（如 `憑證 (2).txt`）。
 - [x] 建立 `credentials.example.txt` 設定範本。
 - [x] 建立 `AGENTS.md`、`ANTIGRAVITY.md`、`README.md`。
