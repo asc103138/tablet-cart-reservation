@@ -17,95 +17,133 @@
     }
     body { font-family: system-ui, "Noto Sans TC", sans-serif;
            width: 94vw; max-width: 1400px; margin: 0 auto; padding: 22px; line-height: 1.7;
-           background: radial-gradient(circle at 14% 10%, rgba(255,255,255,.85) 0 5%, transparent 22%),
-                       radial-gradient(circle at 86% 78%, rgba(255,255,255,.25), transparent 28%),
-                       linear-gradient(180deg, #e7fbff 0%, #b9eaf2 48%, #5bb5c7 100%);
+           background:
+             radial-gradient(ellipse 130% 60% at 50% -8%, rgba(135, 235, 255, 0.42) 0%, rgba(16, 142, 185, 0.25) 45%, transparent 75%),
+             linear-gradient(180deg, #096b8e 0%, #044b70 28%, #023352 64%, #011b30 100%);
            min-height: 100vh; min-height: 100svh; box-sizing: border-box; position: relative; overflow-x: hidden; }
+
+    /* 真實海洋環境動態層 */
     .ambient { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
     .ambient ~ * { position: relative; z-index: 1; }
-    .wave { position: absolute; left: -20%; width: 140%; height: 150px; border-radius: 50% 50% 0 0 / 35% 35% 0 0;
-            bottom: -112px; background: rgba(255,255,255,.22); animation: wave-sway 12s ease-in-out infinite; }
-    .wave-a { bottom: -124px; opacity: .7; }
-    .wave-b { bottom: -144px; opacity: .4; animation-delay: -4s; animation-duration: 16s; }
-    .bubble { position: absolute; bottom: -30px; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.7);
-              border-radius: 50%; background: radial-gradient(circle at 30% 25%, #fff, rgba(255,255,255,.1) 35%, transparent 60%);
-              opacity: .65; animation: bubble-rise 13s linear infinite; }
-    .b1 { left: 3%; animation-delay: -1s; } .b2 { left: 9%; width: 9px; height: 9px; animation-delay: -8s; animation-duration: 17s; }
-    .b3 { left: 15%; width: 24px; height: 24px; animation-delay: -5s; animation-duration: 20s; }
-    .b4 { left: 23%; animation-delay: -11s; animation-duration: 15s; } .b5 { left: 31%; width: 11px; height: 11px; animation-delay: -3s; }
-    .b6 { left: 38%; width: 21px; height: 21px; animation-delay: -14s; animation-duration: 19s; }
-    .b7 { left: 46%; width: 8px; height: 8px; animation-delay: -7s; animation-duration: 14s; }
-    .b8 { left: 53%; width: 18px; height: 18px; animation-delay: -9s; animation-duration: 18s; }
-    .b9 { left: 61%; width: 12px; height: 12px; animation-delay: -2s; animation-duration: 16s; }
-    .b10 { left: 68%; width: 25px; height: 25px; animation-delay: -12s; animation-duration: 21s; }
-    .b11 { left: 74%; width: 9px; height: 9px; animation-delay: -6s; } .b12 { left: 80%; width: 19px; height: 19px; animation-delay: -15s; animation-duration: 18s; }
-    .b13 { left: 86%; width: 13px; height: 13px; animation-delay: -4s; animation-duration: 15s; }
-    .b14 { left: 92%; width: 22px; height: 22px; animation-delay: -10s; animation-duration: 20s; }
-    .b15 { left: 6%; width: 7px; height: 7px; animation-delay: -13s; animation-duration: 12s; }
-    .b16 { left: 27%; width: 15px; height: 15px; animation-delay: -16s; animation-duration: 19s; }
-    .b17 { left: 57%; width: 10px; height: 10px; animation-delay: -17s; animation-duration: 14s; }
-    .b18 { left: 71%; width: 17px; height: 17px; animation-delay: -18s; animation-duration: 17s; }
-    .b19 { left: 83%; width: 8px; height: 8px; animation-delay: -19s; animation-duration: 13s; }
-    .b20 { left: 97%; width: 14px; height: 14px; animation-delay: -20s; animation-duration: 18s; }
-    .fish { position: absolute; width: 56px; height: 28px; border-radius: 55% 45% 45% 55%; background: rgba(255,255,255,.3);
-            opacity: .6; animation: fish-swim 22s linear infinite; }
-    .fish:before { content: ''; position: absolute; width: 8px; height: 8px; right: 11px; top: 8px; border-radius: 50%; background: rgba(24,91,112,.55); }
-    .fish:after { content: ''; position: absolute; left: -18px; top: 2px; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-right: 20px solid rgba(255,255,255,.28); }
-    .fish-a { left: -80px; top: 27%; animation-delay: -5s; }
-    .fish-b { left: -120px; top: 67%; transform: scale(.7); animation-delay: -15s; }
-    @keyframes wave-sway { 0%,100% { transform: translateX(-2%) rotate(-1deg); } 50% { transform: translateX(5%) rotate(1deg); } }
-    @keyframes bubble-rise { 0% { transform: translateY(0) scale(.7); opacity: 0; } 12% { opacity: .65; } 100% { transform: translateY(-115vh) scale(1.15); opacity: 0; } }
-    @keyframes fish-swim { 0% { transform: translateX(0) scale(.85); } 100% { transform: translateX(120vw) scale(1.05); } }
-    .float-ball { position: absolute; width: 46px; height: 46px; border: 3px solid rgba(34,34,34,.55);
-                  border-radius: 50%; opacity: .48;
-                  background: linear-gradient(180deg, #ee3340 0 46%, #f4f4f4 46% 54%, #fff 54%); }
-    .float-ball:after { content: ''; position: absolute; width: 12px; height: 12px; left: 50%; top: 50%;
-                        transform: translate(-50%, -50%); border: 3px solid rgba(34,34,34,.55);
-                        border-radius: 50%; background: #fff; }
-    .ball-a { left: 5%; top: 18%; animation: float-a 13s ease-in-out infinite; }
-    .ball-b { right: 5%; top: 58%; width: 32px; height: 32px; opacity: .36; animation: float-b 17s ease-in-out infinite; }
-    .ball-c { left: 78%; top: 8%; width: 22px; height: 22px; opacity: .3; animation: float-c 11s ease-in-out infinite; }
-    .spark { position: absolute; width: 10px; height: 10px; background: #ffcb05; transform: rotate(45deg);
-             opacity: .7; animation: twinkle 4s ease-in-out infinite; }
-    .spark-a { left: 12%; top: 72%; }
-    .spark-b { right: 14%; top: 26%; width: 7px; height: 7px; animation-delay: 1.2s; background: #3b4cca; }
-    .spark-c { left: 88%; top: 78%; width: 6px; height: 6px; animation-delay: 2.1s; background: #d81e2b; }
-    .bolt { position: absolute; width: 22px; height: 42px; background: #ffcb05; opacity: .55;
-            clip-path: polygon(48% 0, 100% 0, 61% 42%, 90% 42%, 25% 100%, 39% 56%, 8% 56%); }
-    .bolt-a { right: 10%; top: 38%; animation: zap 5s ease-in-out infinite; }
-    .bolt-b { left: 4%; top: 88%; transform: scale(.7) rotate(16deg); animation: zap 6s ease-in-out 1.5s infinite; }
-    .pokemon { position: absolute; display: flex; align-items: center; gap: 5px; padding: 4px 8px;
-               border: 1px solid rgba(59,76,202,.25); border-radius: 999px; background: rgba(255,255,255,.42);
-               color: rgba(45,55,72,.58); font-size: 12px; font-weight: 800; white-space: nowrap;
-               box-shadow: 0 2px 8px rgba(59,76,202,.08); animation: pokemon-float 16s ease-in-out infinite; }
-    .pokemon:before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--poke-color);
-                      box-shadow: 0 0 0 2px rgba(255,255,255,.65); }
-    .p1 { --poke-color: #f4c430; left: 1%; top: 12%; animation-delay: -.5s; }
-    .p2 { --poke-color: #79c267; left: 8%; top: 34%; animation-delay: -4s; }
-    .p3 { --poke-color: #f06b4f; left: 1%; top: 57%; animation-delay: -8s; }
-    .p4 { --poke-color: #5aa9df; left: 9%; top: 82%; animation-delay: -12s; }
-    .p5 { --poke-color: #a77bd4; right: 1%; top: 15%; animation-delay: -2s; }
-    .p6 { --poke-color: #8b6f47; right: 7%; top: 30%; animation-delay: -7s; }
-    .p7 { --poke-color: #f4a6c1; right: 1%; top: 49%; animation-delay: -11s; }
-    .p8 { --poke-color: #e6b85c; right: 8%; top: 70%; animation-delay: -14s; }
-    .p9 { --poke-color: #d7a44a; left: 17%; top: 5%; animation-delay: -6s; }
-    .p10 { --poke-color: #f0d36b; right: 17%; top: 5%; animation-delay: -10s; }
-    .p11 { --poke-color: #9ac9e8; left: 18%; top: 92%; animation-delay: -1s; }
-    .p12 { --poke-color: #f1c40f; right: 18%; top: 91%; animation-delay: -5s; }
-    .p13 { --poke-color: #7cc9e8; left: 28%; top: 2%; animation-delay: -9s; }
-    .p14 { --poke-color: #59436d; right: 29%; top: 2%; animation-delay: -13s; }
-    .p15 { --poke-color: #6fa8dc; left: 29%; top: 96%; animation-delay: -3s; }
-    .p16 { --poke-color: #8e75b8; right: 30%; top: 96%; animation-delay: -15s; }
-    .p17 { --poke-color: #e66c45; left: 43%; top: 1%; animation-delay: -7s; }
-    .p18 { --poke-color: #8cc152; right: 43%; top: 1%; animation-delay: -12s; }
-    .p19 { --poke-color: #f39c12; left: 42%; top: 98%; animation-delay: -4s; }
-    .p20 { --poke-color: #4f8ecb; right: 42%; top: 98%; animation-delay: -9s; }
-    @keyframes pokemon-float { 0%,100% { transform: translate(0,0) rotate(-2deg); } 50% { transform: translate(8px,-12px) rotate(2deg); } }
-    @keyframes float-a { 0%,100% { transform: translate(0,0) rotate(-8deg); } 50% { transform: translate(34px,-22px) rotate(12deg); } }
-    @keyframes float-b { 0%,100% { transform: translate(0,0) rotate(10deg); } 50% { transform: translate(-26px,28px) rotate(-16deg); } }
-    @keyframes float-c { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-18px,34px) scale(1.25); } }
-    @keyframes twinkle { 0%,100% { opacity: .2; transform: rotate(45deg) scale(.7); } 50% { opacity: .9; transform: rotate(225deg) scale(1.35); } }
-    @keyframes zap { 0%,100% { opacity: .2; transform: translateY(0) rotate(0); } 50% { opacity: .85; transform: translateY(-15px) rotate(8deg); } }
+
+    /* 穿透洋面的陽光水下光束 (Underwater Sun Rays / God Rays) */
+    .ocean-sunrays {
+      position: absolute; inset: -10% -20% 0 -20%;
+      background: repeating-linear-gradient(
+        105deg,
+        transparent 0%,
+        transparent 6%,
+        rgba(255, 255, 255, 0.035) 8%,
+        rgba(195, 245, 255, 0.13) 12%,
+        rgba(255, 255, 255, 0.03) 15%,
+        transparent 20%,
+        transparent 28%
+      );
+      filter: blur(14px);
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 95%);
+      -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 95%);
+      animation: rays-sway 16s ease-in-out infinite alternate;
+      transform-origin: 50% 0;
+    }
+    @keyframes rays-sway {
+      0% { transform: scaleX(1) skewX(-3deg); opacity: 0.75; }
+      50% { transform: scaleX(1.12) skewX(2deg); opacity: 1; }
+      100% { transform: scaleX(0.96) skewX(-2deg); opacity: 0.8; }
+    }
+
+    /* 海底波光水紋折射 (Water Caustics) */
+    .ocean-caustics {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 55% 30% at 25% 18%, rgba(185, 245, 255, 0.16), transparent 70%),
+        radial-gradient(ellipse 65% 35% at 75% 28%, rgba(165, 240, 255, 0.14), transparent 75%),
+        radial-gradient(ellipse 60% 40% at 45% 55%, rgba(140, 230, 255, 0.1), transparent 80%),
+        radial-gradient(ellipse 50% 30% at 85% 75%, rgba(120, 220, 255, 0.08), transparent 75%);
+      mix-blend-mode: screen;
+      animation: caustics-pulse 12s ease-in-out infinite alternate;
+    }
+    @keyframes caustics-pulse {
+      0% { opacity: 0.6; transform: scale(1) translateY(0); }
+      50% { opacity: 0.95; transform: scale(1.03) translateY(-8px); }
+      100% { opacity: 0.7; transform: scale(0.97) translateY(6px); }
+    }
+
+    /* 真實深海洋流流體波浪 */
+    .ocean-waves {
+      position: absolute; bottom: -10px; left: 0; width: 100%; height: 260px;
+      overflow: hidden; pointer-events: none;
+    }
+    .wave-layer {
+      position: absolute; bottom: 0; left: 0; width: 200%; height: 100%;
+    }
+    .wave-1 {
+      animation: wave-flow 18s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+    }
+    .wave-2 {
+      bottom: -15px; opacity: 0.85;
+      animation: wave-flow 13s cubic-bezier(0.36, 0.45, 0.63, 0.53) -4s infinite reverse;
+    }
+    .wave-3 {
+      bottom: -30px; opacity: 0.7;
+      animation: wave-flow 22s cubic-bezier(0.36, 0.45, 0.63, 0.53) -8s infinite;
+    }
+    @keyframes wave-flow {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(-25%); }
+      100% { transform: translateX(0); }
+    }
+
+    /* 海洋浮游微粒 (Marine Snow / Motes) */
+    .mote {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle, rgba(230, 250, 255, 0.85) 0%, rgba(160, 235, 255, 0.3) 60%, transparent 100%);
+      filter: blur(1px); opacity: 0.6;
+      animation: mote-rise 18s linear infinite;
+    }
+    .m1 { left: 8%; width: 5px; height: 5px; animation-duration: 16s; animation-delay: -2s; }
+    .m2 { left: 24%; width: 7px; height: 7px; animation-duration: 21s; animation-delay: -7s; }
+    .m3 { left: 42%; width: 4px; height: 4px; animation-duration: 14s; animation-delay: -11s; }
+    .m4 { left: 58%; width: 6px; height: 6px; animation-duration: 19s; animation-delay: -5s; }
+    .m5 { left: 73%; width: 5px; height: 5px; animation-duration: 24s; animation-delay: -14s; }
+    .m6 { left: 86%; width: 8px; height: 8px; animation-duration: 17s; animation-delay: -9s; }
+    .m7 { left: 93%; width: 4px; height: 4px; animation-duration: 22s; animation-delay: -3s; }
+    .m8 { left: 16%; width: 6px; height: 6px; animation-duration: 20s; animation-delay: -15s; }
+    @keyframes mote-rise {
+      0% { transform: translateY(105vh) translateX(0); opacity: 0; }
+      15% { opacity: 0.7; }
+      85% { opacity: 0.7; }
+      100% { transform: translateY(-5vh) translateX(35px); opacity: 0; }
+    }
+
+    /* 深海水泡 (Underwater Micro Bubbles) */
+    .bubble {
+      position: absolute; border-radius: 50%;
+      border: 1px solid rgba(220, 250, 255, 0.55);
+      background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.85), rgba(160, 235, 255, 0.18) 45%, transparent 70%);
+      box-shadow: 0 0 6px rgba(180, 240, 255, 0.25);
+      opacity: 0; animation: bubble-drift linear infinite;
+    }
+    .b1 { left: 6%; width: 14px; height: 14px; animation-duration: 15s; animation-delay: -1s; }
+    .b2 { left: 14%; width: 8px; height: 8px; animation-duration: 19s; animation-delay: -8s; }
+    .b3 { left: 22%; width: 18px; height: 18px; animation-duration: 17s; animation-delay: -4s; }
+    .b4 { left: 33%; width: 11px; height: 11px; animation-duration: 14s; animation-delay: -11s; }
+    .b5 { left: 47%; width: 16px; height: 16px; animation-duration: 20s; animation-delay: -6s; }
+    .b6 { left: 55%; width: 9px; height: 9px; animation-duration: 16s; animation-delay: -13s; }
+    .b7 { left: 67%; width: 20px; height: 20px; animation-duration: 18s; animation-delay: -3s; }
+    .b8 { left: 77%; width: 12px; height: 12px; animation-duration: 15s; animation-delay: -10s; }
+    .b9 { left: 84%; width: 15px; height: 15px; animation-duration: 21s; animation-delay: -7s; }
+    .b10 { left: 92%; width: 10px; height: 10px; animation-duration: 17s; animation-delay: -15s; }
+    .b11 { left: 39%; width: 13px; height: 13px; animation-duration: 22s; animation-delay: -2s; }
+    .b12 { left: 62%; width: 17px; height: 17px; animation-duration: 19s; animation-delay: -9s; }
+    .b13 { left: 71%; width: 7px; height: 7px; animation-duration: 13s; animation-delay: -5s; }
+    .b14 { left: 29%; width: 12px; height: 12px; animation-duration: 18s; animation-delay: -12s; }
+    @keyframes bubble-drift {
+      0% { transform: translateY(105vh) translateX(0) scale(0.8); opacity: 0; }
+      10% { opacity: 0.75; }
+      50% { transform: translateY(50vh) translateX(18px) scale(1); }
+      90% { opacity: 0.65; }
+      100% { transform: translateY(-5vh) translateX(-12px) scale(1.1); opacity: 0; }
+    }
     @media (prefers-reduced-motion: reduce) {
       *, ::before, ::after {
         animation-duration: 0.01ms !important;
@@ -127,15 +165,22 @@
     @media (hover: hover) and (pointer: fine) {
       .pokeball:hover { transform: scale(1.08) rotate(8deg); }
     }
-    h2 { text-align: center; color: #3b3b3b; margin: 6px 0 4px;
-         font-weight: 800; letter-spacing: 1px; }
-    .sub { text-align: center; color: #b58900; font-size: 13px; font-weight: 700; }
-    .hint { color: #216b78; font-size: 14px; margin-top: -4px; }
-    .card { background: rgba(255,255,255,.9); border: 2px solid #65c3d0; border-radius: 14px;
-            padding: 22px; margin: 20px 0; box-shadow: 0 2px 6px rgba(0,0,0,.08);
+    h2 { text-align: center; color: #ffffff; margin: 6px 0 4px;
+         font-weight: 900; letter-spacing: 2px;
+         text-shadow: 0 2px 14px rgba(1, 27, 48, 0.75); }
+    .sub { text-align: center; color: #ffe066; font-size: 13px; font-weight: 700;
+           text-shadow: 0 1px 6px rgba(1, 27, 48, 0.6); }
+    .hint { color: #dcf5fb; font-size: 14px; margin-top: -4px; text-align: center;
+            text-shadow: 0 1px 6px rgba(1, 27, 48, 0.75); }
+    .card { background: rgba(255,255,255,.94);
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            border: 1px solid rgba(255,255,255,.85); border-radius: 16px;
+            padding: 24px; margin: 22px 0;
+            box-shadow: 0 14px 38px rgba(1, 27, 48, 0.28), 0 2px 6px rgba(1, 27, 48, 0.1);
             transition: box-shadow 200ms var(--ease-out), transform 200ms var(--ease-out); }
-    .card h3 { margin-top: 0; color: #087f8c; border-bottom: 2px solid #65c3d0;
-               padding-bottom: 6px; font-weight: 800; text-align: center; }
+    .card h3 { margin-top: 0; color: #055c75; border-bottom: 2px solid #5bb7c7;
+               padding-bottom: 8px; font-weight: 800; text-align: center; }
     label { display: block; margin-top: 10px; font-size: 14px; color: #333; font-weight: 600; }
     input, select, textarea, button { font-size: 18px; padding: 13px;
                             margin-top: 4px; box-sizing: border-box;
@@ -314,12 +359,29 @@
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
-    <span class="wave wave-a"></span><span class="wave wave-b"></span>
-    <span class="fish fish-a"></span><span class="fish fish-b"></span>
-    <span class="bubble b1"></span><span class="bubble b2"></span><span class="bubble b3"></span><span class="bubble b4"></span><span class="bubble b5"></span>
-    <span class="bubble b6"></span><span class="bubble b7"></span><span class="bubble b8"></span><span class="bubble b9"></span><span class="bubble b10"></span>
-    <span class="bubble b11"></span><span class="bubble b12"></span><span class="bubble b13"></span><span class="bubble b14"></span><span class="bubble b15"></span>
-    <span class="bubble b16"></span><span class="bubble b17"></span><span class="bubble b18"></span><span class="bubble b19"></span><span class="bubble b20"></span>
+    <div class="ocean-sunrays"></div>
+    <div class="ocean-caustics"></div>
+    <!-- 海洋浮游微粒與深海水泡 -->
+    <span class="mote m1"></span><span class="mote m2"></span><span class="mote m3"></span>
+    <span class="mote m4"></span><span class="mote m5"></span><span class="mote m6"></span>
+    <span class="mote m7"></span><span class="mote m8"></span>
+    <span class="bubble b1"></span><span class="bubble b2"></span><span class="bubble b3"></span>
+    <span class="bubble b4"></span><span class="bubble b5"></span><span class="bubble b6"></span>
+    <span class="bubble b7"></span><span class="bubble b8"></span><span class="bubble b9"></span>
+    <span class="bubble b10"></span><span class="bubble b11"></span><span class="bubble b12"></span>
+    <span class="bubble b13"></span><span class="bubble b14"></span>
+    <!-- 真實深海洋流波浪層 -->
+    <div class="ocean-waves">
+      <svg class="wave-layer wave-1" viewBox="0 0 1440 180" preserveAspectRatio="none">
+        <path d="M0,60 C320,120 480,20 720,70 C960,120 1200,30 1440,60 L1440,180 L0,180 Z" fill="rgba(4, 75, 112, 0.45)"/>
+      </svg>
+      <svg class="wave-layer wave-2" viewBox="0 0 1440 180" preserveAspectRatio="none">
+        <path d="M0,90 C360,30 540,130 900,80 C1140,40 1320,110 1440,90 L1440,180 L0,180 Z" fill="rgba(9, 105, 142, 0.35)"/>
+      </svg>
+      <svg class="wave-layer wave-3" viewBox="0 0 1440 180" preserveAspectRatio="none">
+        <path d="M0,110 C240,70 600,130 840,100 C1080,70 1320,120 1440,110 L1440,180 L0,180 Z" fill="rgba(19, 138, 178, 0.28)"/>
+      </svg>
+    </div>
   </div>
   <div class="pokeball"></div>
   <h2>平板車預約</h2>

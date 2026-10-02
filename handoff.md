@@ -44,6 +44,10 @@
 - [x] **消除行動裝置點擊灰斑**：全站配置 `-webkit-tap-highlight-color: transparent` 與 `touch-action: manipulation`，消除 300ms 延遲與閃爍。
 - [x] **狀態訊息平滑淡入滑動**：預約提示文字從生硬抽換改為 70ms translateY 與 opacity 平滑過渡。
 - [x] **卡片微差入場動效 (Stagger Entry)**：頂部宣傳橫幅與卡片採 40~150ms 階梯式滑入，畫面更生動精緻。
+- [x] **真實深海景致背景 (Real Underwater Ocean Landscape)**：
+  - 移除舊式扁平卡通元素，重構為真實深海由淺入深漸層（`#096b8e` ~ `#011b30`）與洋面陽光折射。
+  - 加入水下穿透神光束 (`ocean-sunrays` / God Rays)、水波光影折射 (`ocean-caustics`)、深海洋流三層流體波浪 (`ocean-waves`) 以及深海微氣泡與海洋浮游微粒 (`mote-rise`)。
+  - 優化白色半透明毛玻璃卡片（`backdrop-filter: blur(18px) saturate(180%)`），使表格與文字在海洋背景中層次分明、極致清晰。
 - [x] **無障礙支援 (`prefers-reduced-motion`)**：偵測使用者系統動態偏好，必要時自動關閉所有位移動畫。
 
 ### 5. 專案工程化與標準化
