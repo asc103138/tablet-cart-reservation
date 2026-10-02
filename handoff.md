@@ -58,6 +58,14 @@
 
 ---
 
+## 💡 踩坑紀錄與經驗總結 (Gotchas & Key Learnings)
+1. **GitHub 儲存庫命名**：GitHub CLI 對純中文字元名稱會自動 slugify 為單一連字號 `-`，需後續以 `gh repo rename tablet-cart-reservation` 重新賦予標準英文章節代號。
+2. **.gitignore 萬用字元白名單**：使用 `credentials*` 忽略機敏檔案時會誤將 `credentials.example.txt` 範本忽略，需透過 `!credentials.example.txt` 明確加入例外追蹤。
+3. **深色海洋背景與文字易讀性平衡**：深色深海動態背景極富沉浸感，但預約表格內容必須清晰易讀。透過將 `.card` 與 `.line-banner` 採用白金級高不透明度毛玻璃（`rgba(255, 255, 255, 0.94)` + `blur(18px) saturate(180%)`），並將頂部標題加上深海投影 (`0 2px 14px rgba(1, 27, 48, 0.75)`)，既保留了逼真海洋的宏偉，又完全保障了文字辨識度。
+4. **手機端 :hover 黏著修復**：行動裝置無 hover 狀態，未經 `@media (hover: hover) and (pointer: fine)` 隔離的 `:hover` 會在手指觸控後永久停留在 active 狀態，本次全面封裝徹底解決了此平台差異。
+
+---
+
 ## 🔮 後續建議與待辦事項 (Roadmap & Next Steps)
 1. **正式上線推廣**：
    - 於學校教職員研習或 LINE 群組發布圖文選單與官方帳號 QR Code。
