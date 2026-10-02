@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: system-ui, "Noto Sans TC", sans-serif;
+           width: 94vw; max-width: 1400px; margin: 0 auto; padding: 22px; line-height: 1.7;
+           background: radial-gradient(circle at 14% 10%, rgba(255,255,255,.85) 0 5%, transparent 22%),
+                       radial-gradient(circle at 86% 78%, rgba(255,255,255,.25), transparent 28%),
+                       linear-gradient(180deg, #e7fbff 0%, #b9eaf2 48%, #5bb5c7 100%);
+           min-height: 100vh; box-sizing: border-box; position: relative; overflow-x: hidden; }
+    .ambient { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+    .ambient ~ * { position: relative; z-index: 1; }
+    .wave { position: absolute; left: -20%; width: 140%; height: 150px; border-radius: 50% 50% 0 0 / 35% 35% 0 0;
+            bottom: -112px; background: rgba(255,255,255,.22); animation: wave-sway 12s ease-in-out infinite; }
+    .wave-a { bottom: -124px; opacity: .7; }
+    .wave-b { bottom: -144px; opacity: .4; animation-delay: -4s; animation-duration: 16s; }
+    .bubble { position: absolute; bottom: -30px; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.7);
+              border-radius: 50%; background: radial-gradient(circle at 30% 25%, #fff, rgba(255,255,255,.1) 35%, transparent 60%);
+              opacity: .65; animation: bubble-rise 13s linear infinite; }
+    .b1 { left: 3%; animation-delay: -1s; } .b2 { left: 9%; width: 9px; height: 9px; animation-delay: -8s; animation-duration: 17s; }
+    .b3 { left: 15%; width: 24px; height: 24px; animation-delay: -5s; animation-duration: 20s; }
+    .b4 { left: 23%; animation-delay: -11s; animation-duration: 15s; } .b5 { left: 31%; width: 11px; height: 11px; animation-delay: -3s; }
+    .b6 { left: 38%; width: 21px; height: 21px; animation-delay: -14s; animation-duration: 19s; }
+    .b7 { left: 46%; width: 8px; height: 8px; animation-delay: -7s; animation-duration: 14s; }
+    .b8 { left: 53%; width: 18px; height: 18px; animation-delay: -9s; animation-duration: 18s; }
+    .b9 { left: 61%; width: 12px; height: 12px; animation-delay: -2s; animation-duration: 16s; }
+    .b10 { left: 68%; width: 25px; height: 25px; animation-delay: -12s; animation-duration: 21s; }
+    .b11 { left: 74%; width: 9px; height: 9px; animation-delay: -6s; } .b12 { left: 80%; width: 19px; height: 19px; animation-delay: -15s; animation-duration: 18s; }
+    .b13 { left: 86%; width: 13px; height: 13px; animation-delay: -4s; animation-duration: 15s; }
+    .b14 { left: 92%; width: 22px; height: 22px; animation-delay: -10s; animation-duration: 20s; }
+    .b15 { left: 6%; width: 7px; height: 7px; animation-delay: -13s; animation-duration: 12s; }
+    .b16 { left: 27%; width: 15px; height: 15px; animation-delay: -16s; animation-duration: 19s; }
+    .b17 { left: 57%; width: 10px; height: 10px; animation-delay: -17s; animation-duration: 14s; }
+    .b18 { left: 71%; width: 17px; height: 17px; animation-delay: -18s; animation-duration: 17s; }
+    .b19 { left: 83%; width: 8px; height: 8px; animation-delay: -19s; animation-duration: 13s; }
+    .b20 { left: 97%; width: 14px; height: 14px; animation-delay: -20s; animation-duration: 18s; }
+    .fish { position: absolute; width: 56px; height: 28px; border-radius: 55% 45% 45% 55%; background: rgba(255,255,255,.3);
+            opacity: .6; animation: fish-swim 22s linear infinite; }
+    .fish:before { content: ''; position: absolute; width: 8px; height: 8px; right: 11px; top: 8px; border-radius: 50%; background: rgba(24,91,112,.55); }
+    .fish:after { content: ''; position: absolute; left: -18px; top: 2px; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-right: 20px solid rgba(255,255,255,.28); }
+    .fish-a { left: -80px; top: 27%; animation-delay: -5s; }
+    .fish-b { left: -120px; top: 67%; transform: scale(.7); animation-delay: -15s; }
+    @keyframes wave-sway { 0%,100% { transform: translateX(-2%) rotate(-1deg); } 50% { transform: translateX(5%) rotate(1deg); } }
+    @keyframes bubble-rise { 0% { transform: translateY(0) scale(.7); opacity: 0; } 12% { opacity: .65; } 100% { transform: translateY(-115vh) scale(1.15); opacity: 0; } }
+    @keyframes fish-swim { 0% { transform: translateX(0) scale(.85); } 100% { transform: translateX(120vw) scale(1.05); } }
+    .float-ball { position: absolute; width: 46px; height: 46px; border: 3px solid rgba(34,34,34,.55);
+                  border-radius: 50%; opacity: .48;
+                  background: linear-gradient(180deg, #ee3340 0 46%, #f4f4f4 46% 54%, #fff 54%); }
+    .float-ball:after { content: ''; position: absolute; width: 12px; height: 12px; left: 50%; top: 50%;
+                        transform: translate(-50%, -50%); border: 3px solid rgba(34,34,34,.55);
+                        border-radius: 50%; background: #fff; }
+    .ball-a { left: 5%; top: 18%; animation: float-a 13s ease-in-out infinite; }
+    .ball-b { right: 5%; top: 58%; width: 32px; height: 32px; opacity: .36; animation: float-b 17s ease-in-out infinite; }
+    .ball-c { left: 78%; top: 8%; width: 22px; height: 22px; opacity: .3; animation: float-c 11s ease-in-out infinite; }
+    .spark { position: absolute; width: 10px; height: 10px; background: #ffcb05; transform: rotate(45deg);
+             opacity: .7; animation: twinkle 4s ease-in-out infinite; }
+    .spark-a { left: 12%; top: 72%; }
+    .spark-b { right: 14%; top: 26%; width: 7px; height: 7px; animation-delay: 1.2s; background: #3b4cca; }
+    .spark-c { left: 88%; top: 78%; width: 6px; height: 6px; animation-delay: 2.1s; background: #d81e2b; }
+    .bolt { position: absolute; width: 22px; height: 42px; background: #ffcb05; opacity: .55;
+            clip-path: polygon(48% 0, 100% 0, 61% 42%, 90% 42%, 25% 100%, 39% 56%, 8% 56%); }
+    .bolt-a { right: 10%; top: 38%; animation: zap 5s ease-in-out infinite; }
+    .bolt-b { left: 4%; top: 88%; transform: scale(.7) rotate(16deg); animation: zap 6s ease-in-out 1.5s infinite; }
+    .pokemon { position: absolute; display: flex; align-items: center; gap: 5px; padding: 4px 8px;
+               border: 1px solid rgba(59,76,202,.25); border-radius: 999px; background: rgba(255,255,255,.42);
+               color: rgba(45,55,72,.58); font-size: 12px; font-weight: 800; white-space: nowrap;
+               box-shadow: 0 2px 8px rgba(59,76,202,.08); animation: pokemon-float 16s ease-in-out infinite; }
+    .pokemon:before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--poke-color);
+                      box-shadow: 0 0 0 2px rgba(255,255,255,.65); }
+    .p1 { --poke-color: #f4c430; left: 1%; top: 12%; animation-delay: -.5s; }
+    .p2 { --poke-color: #79c267; left: 8%; top: 34%; animation-delay: -4s; }
+    .p3 { --poke-color: #f06b4f; left: 1%; top: 57%; animation-delay: -8s; }
+    .p4 { --poke-color: #5aa9df; left: 9%; top: 82%; animation-delay: -12s; }
+    .p5 { --poke-color: #a77bd4; right: 1%; top: 15%; animation-delay: -2s; }
+    .p6 { --poke-color: #8b6f47; right: 7%; top: 30%; animation-delay: -7s; }
+    .p7 { --poke-color: #f4a6c1; right: 1%; top: 49%; animation-delay: -11s; }
+    .p8 { --poke-color: #e6b85c; right: 8%; top: 70%; animation-delay: -14s; }
+    .p9 { --poke-color: #d7a44a; left: 17%; top: 5%; animation-delay: -6s; }
+    .p10 { --poke-color: #f0d36b; right: 17%; top: 5%; animation-delay: -10s; }
+    .p11 { --poke-color: #9ac9e8; left: 18%; top: 92%; animation-delay: -1s; }
+    .p12 { --poke-color: #f1c40f; right: 18%; top: 91%; animation-delay: -5s; }
+    .p13 { --poke-color: #7cc9e8; left: 28%; top: 2%; animation-delay: -9s; }
+    .p14 { --poke-color: #59436d; right: 29%; top: 2%; animation-delay: -13s; }
+    .p15 { --poke-color: #6fa8dc; left: 29%; top: 96%; animation-delay: -3s; }
+    .p16 { --poke-color: #8e75b8; right: 30%; top: 96%; animation-delay: -15s; }
+    .p17 { --poke-color: #e66c45; left: 43%; top: 1%; animation-delay: -7s; }
+    .p18 { --poke-color: #8cc152; right: 43%; top: 1%; animation-delay: -12s; }
+    .p19 { --poke-color: #f39c12; left: 42%; top: 98%; animation-delay: -4s; }
+    .p20 { --poke-color: #4f8ecb; right: 42%; top: 98%; animation-delay: -9s; }
+    @keyframes pokemon-float { 0%,100% { transform: translate(0,0) rotate(-2deg); } 50% { transform: translate(8px,-12px) rotate(2deg); } }
+    @keyframes float-a { 0%,100% { transform: translate(0,0) rotate(-8deg); } 50% { transform: translate(34px,-22px) rotate(12deg); } }
+    @keyframes float-b { 0%,100% { transform: translate(0,0) rotate(10deg); } 50% { transform: translate(-26px,28px) rotate(-16deg); } }
+    @keyframes float-c { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-18px,34px) scale(1.25); } }
+    @keyframes twinkle { 0%,100% { opacity: .2; transform: rotate(45deg) scale(.7); } 50% { opacity: .9; transform: rotate(225deg) scale(1.35); } }
+    @keyframes zap { 0%,100% { opacity: .2; transform: translateY(0) rotate(0); } 50% { opacity: .85; transform: translateY(-15px) rotate(8deg); } }
+    @media (prefers-reduced-motion: reduce) { .ambient * { animation: none !important; } }
+    .pokeball { width: 40px; height: 40px; border-radius: 50%;
+                background: linear-gradient(180deg, #d81e2b 0%, #d81e2b 48%, #f4f4f4 48%, #f4f4f4 52%, #fff 52%, #fff 100%);
+                border: 3px solid #222; position: relative; margin: 0 auto 6px; }
+    .pokeball:after { content: ''; width: 12px; height: 12px; border-radius: 50%;
+                      background: #fff; border: 3px solid #222; position: absolute;
+                      top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    h2 { text-align: center; color: #3b3b3b; margin: 6px 0 4px;
+         font-weight: 800; letter-spacing: 1px; }
+    .sub { text-align: center; color: #b58900; font-size: 13px; font-weight: 700; }
+    .hint { color: #216b78; font-size: 14px; margin-top: -4px; }
+    .card { background: rgba(255,255,255,.9); border: 2px solid #65c3d0; border-radius: 14px;
+            padding: 22px; margin: 20px 0; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+    .card h3 { margin-top: 0; color: #087f8c; border-bottom: 2px solid #65c3d0;
+               padding-bottom: 6px; font-weight: 800; text-align: center; }
+    label { display: block; margin-top: 10px; font-size: 14px; color: #333; font-weight: 600; }
+    input, select, textarea, button { font-size: 18px; padding: 13px;
+                            margin-top: 4px; box-sizing: border-box;
+                            border: 2px solid #ddd; border-radius: 10px; }
+    input[type="date"], input[type="week"], select, textarea { width: 100%; background: #fff; }
+    input:focus, select:focus, textarea:focus { border-color: #36aeba; outline: none; }
+    #purpose { min-height: 72px; resize: vertical; }
+    button { background: #087f8c; color: #fff; border: 0; cursor: pointer;
+             margin-top: 12px; font-weight: 700; border-radius: 10px; width: 100%; }
+    button:disabled { opacity: .5; cursor: wait; }
+    button.ghost { background: #ffcb05; color: #3b3b3b; }
+    button.danger { background: #8b0000; }
+    #status { min-height: 1.5em; color: #1a7f37; margin-top: 8px; font-weight: 700; }
+    ul { padding: 0; }
+    li { list-style: none; border-bottom: 1px solid #eee; padding: 10px 0; }
+    .meta { color: #666; font-size: 13px; }
+    .rowbtns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+    .rowbtns button { width: auto; padding: 6px 14px; font-size: 14px; margin-top: 0; }
+     .editbox { border: 2px dashed #ffcb05; border-radius: 10px; padding: 10px;
+                margin-top: 8px; background: #fffdf0; }
+     .borrow-note { color: #216b78; font-size: 13px; margin: 4px 0 0; }
+     #tabletCountBox { display: none; }
+
+    /* 節次表點格子 */
+    .selbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+    .selbar button { width: auto; padding: 6px 14px; margin-top: 0; }
+    .table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 10px; }
+    table.grid { width: 100%; min-width: 720px; border-collapse: collapse; margin-top: 0; }
+    table.grid th, table.grid td { border: 1px solid #d9c88a; padding: 10px; text-align: center; }
+    table.grid th { background: linear-gradient(135deg, #168c9b, #69d0d8); color: #fff; font-weight: 900;
+                    font-size: 21px; letter-spacing: 1px; text-align: center; vertical-align: middle;
+                    text-shadow: 0 1px 0 rgba(255,255,255,.8); }
+    table.grid td.time { background: #fffbe6; font-size: 14px; color: #8a6d00;
+                         white-space: nowrap; width: 110px; font-weight: 700; }
+    td.cell { cursor: pointer; min-height: 58px; background: #fff; transition: background .15s; font-size: 16px; }
+    td.cell:hover { background: #fff3c4; }
+    td.cell.selected { background: #b7f2c0; color: #0a6b2e; font-weight: 800; }
+    td.cell.taken { background: #ffd6d6; color: #8b0000; cursor: not-allowed; font-size: 13px; }
+    td.cell.blocked { background: #ececec; color: #888; cursor: not-allowed; font-size: 12px; }
+    td.cell.dim { background: #f5f5f5; color: #bbb; cursor: default; }
+    td.cell.active-head { outline: 2px solid #d81e2b; }
+    .legend { font-size: 12px; color: #666; margin-top: 8px; }
+    .legend span { display: inline-block; margin-right: 14px; }
+    .dot { display: inline-block; width: 12px; height: 12px; border-radius: 3px;
+           margin-right: 4px; vertical-align: middle; }
+    .dot.free { background: #fff; border: 1px solid #ccc; }
+    .dot.sel { background: #b7f2c0; }
+    .dot.taken { background: #ffd6d6; }
+    .dot.blocked { background: #ececec; }
+    .dot.dim { background: #eee; }
+    .usage-chart { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+    .usage-row { display: grid; grid-template-columns: 90px minmax(0, 1fr) 55px;
+                 align-items: center; gap: 10px; }
+    .usage-label { font-weight: 700; color: #216b78; white-space: nowrap; }
+    .usage-track { height: 28px; overflow: hidden; border-radius: 999px; background: #e3f2f5; }
+    .usage-bar { height: 100%; border-radius: 999px;
+                 background: linear-gradient(90deg, #087f8c, #65c3d0); transition: width .35s ease; }
+    .usage-value { text-align: right; color: #087f8c; font-weight: 800; white-space: nowrap; }
+    .usage-empty { color: #777; text-align: center; }
+    .usage-meta { color: #216b78; font-size: 14px; font-weight: 700; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .chips button { width: auto; padding: 6px 10px; font-size: 13px; margin-top: 0;
+                    background: #fff; color: #3b3b3b; border: 2px solid #ddd; }
+    .chips button.sel { background: #b7f2c0; border-color: #1a7f37; color: #0a6b2e; }
+    .chips button.blocked, .chips button:disabled { background: #ececec; border-color: #ddd; color: #999; cursor: not-allowed; }
+    .line-banner {
+      background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+      border: 2px solid #81c784;
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin: 16px 0 20px;
+      box-shadow: 0 2px 8px rgba(46, 125, 50, 0.1);
+    }
+    .line-banner .line-badge {
+      display: inline-block;
+      background: #2e7d32;
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+    .line-banner p {
+      margin: 6px 0 10px;
+      color: #2e4d30;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .line-banner b {
+      color: #1b5e20;
+      background: #c8e6c9;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .line-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .line-features span {
+      background: #fff;
+      color: #2e7d32;
+      border: 1px solid #a5d6a7;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    @media (max-width: 600px) {
+      body { padding: 12px; }
+      .card { padding: 16px; }
+      .card { margin: 12px 0; }
+      table.grid { min-width: 650px; }
+      table.grid th { font-size: 18px; }
+      table.grid td.time { width: 92px; font-size: 12px; }
+      td.cell { font-size: 14px; }
+      .usage-row { grid-template-columns: 72px minmax(0, 1fr) 42px; gap: 6px; font-size: 14px; }
+    }
+    @media (max-width: 420px) {
+      body { width: 100%; padding: 8px; }
+      .card { padding: 12px; border-radius: 10px; }
+      .hint { font-size: 13px; }
+      table.grid { min-width: 620px; }
+      table.grid th { font-size: 16px; padding: 8px 5px; }
+      table.grid td { padding: 8px 5px; }
+      table.grid td.time { width: 84px; }
+      input, select, textarea, button { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <span class="wave wave-a"></span><span class="wave wave-b"></span>
+    <span class="fish fish-a"></span><span class="fish fish-b"></span>
+    <span class="bubble b1"></span><span class="bubble b2"></span><span class="bubble b3"></span><span class="bubble b4"></span><span class="bubble b5"></span>
+    <span class="bubble b6"></span><span class="bubble b7"></span><span class="bubble b8"></span><span class="bubble b9"></span><span class="bubble b10"></span>
+    <span class="bubble b11"></span><span class="bubble b12"></span><span class="bubble b13"></span><span class="bubble b14"></span><span class="bubble b15"></span>
+    <span class="bubble b16"></span><span class="bubble b17"></span><span class="bubble b18"></span><span class="bubble b19"></span><span class="bubble b20"></span>
+  </div>
+  <div class="pokeball"></div>
+  <h2>平板車預約</h2>
+  <p class="hint">請先選班級、借用方式，再選週次；可借整台車，或借用 10 台以內的平板。同一週同一天可一次選多個節次。已過去的週次不能預約；星期一、星期三下午第 5～7 節無法預約。</p>
+
+  <!-- LINE 官方帳號極速預約宣傳卡 -->
+  <div class="line-banner">
+    <div class="line-badge">📱 推薦使用 LINE Bot 秒速預約</div>
+    <p>不想每次開網頁選課表？只要私訊 LINE 官方帳號傳一句話，例如：<br>
+    <b>「明天早修借整台車」</b> 或 <b>「下週二第1節借平板5台」</b><br>
+    Bot 自動為您記住常用班級，免打字點按鈕即完成預約！</p>
+    <div class="line-features">
+      <span>⚡ 一句話極速預約</span>
+      <span>🏫 自動記憶常用班級</span>
+      <span>🟢 燈號即時查空堂</span>
+      <span>👆 全流程點擊按鈕</span>
+    </div>
+  </div>
+
+  <!-- 預約表單 -->
+  <div class="card">
+    <h3>新增預約</h3>
+    <label>班級</label>
+    <select id="className"></select>
+    <label>借用方式</label>
+    <select id="borrowType"></select>
+    <div id="tabletCountBox">
+      <label>平板台數</label>
+      <select id="tabletCount"></select>
+    </div>
+    <p class="borrow-note">同一時段有人預約後，整格仍會鎖定；選「平板」時請填實際台數。</p>
+    <label>選擇週次</label>
+    <select id="week"></select>
+    <div class="selbar">
+      <button id="btnRefresh" class="ghost">回到本週</button>
+      <span id="weekInfo"></span>
+    </div>
+    <div class="table-wrap"><table class="grid" id="grid"></table></div>
+    <div class="legend">
+      <span><i class="dot free"></i>空格＝可選</span>
+      <span><i class="dot sel"></i>已選</span>
+      <span><i class="dot taken"></i>已被預約</span>
+      <span><i class="dot blocked"></i>無法預約</span>
+    </div>
+    <label>用途（必填）</label>
+    <textarea id="purpose" rows="2" placeholder="例如：數學 Kahoot 或社會 Padlet"></textarea>
+    <button id="btnSubmit">送出預約</button>
+    <p id="status"></p>
+  </div>
+
+  <!-- 各班使用狀況 -->
+  <div class="card">
+    <h3>各班平板車使用狀況</h3>
+    <p class="hint">依各班成功預約的節次數統計，開啟頁面後自動載入，不需逐班查詢。</p>
+    <div id="usageStatus" class="usage-meta">統計載入中...</div>
+    <div id="usageChart" class="usage-chart" role="img" aria-label="各班預約節次長條圖"></div>
+  </div>
+
+  <script>
+    var $ = function (id) { return document.getElementById(id); };
+    var DAYS = [
+      { label: '星期一', idx: 1 }, { label: '星期二', idx: 2 }, { label: '星期三', idx: 3 },
+      { label: '星期四', idx: 4 }, { label: '星期五', idx: 5 }
+    ];
+    var PERIODS = [
+      { label: '早修', time: '07:40~08:30' },
+      { label: '第1節', time: '8:40~9:20' },
+      { label: '第2節', time: '9:30~10:10' },
+      { label: '第3節', time: '10:30~11:10' },
+      { label: '第4節', time: '11:20~12:00' },
+      { label: '第5節', time: '13:30~14:10' },
+      { label: '第6節', time: '14:20~15:00' },
+      { label: '第7節', time: '15:20~16:00' }
+    ];
+    var selectedWeekday = null;
+    var selectedPeriods = [];
+    var bookedMap = {};
+    var BLOCKED_PERIODS = ['第5節', '第6節', '第7節'];
+    var BORROW_TYPES = ['整台車', '平板'];
+    var MAX_TABLET_COUNT = 10;
+
+    var SCHOOL_WEEK_START = Date.UTC(2026, 7, 30); // 第 1 週：2026-08-30～2026-09-05
+    var SCHOOL_WEEK_COUNT = 21;
+    function pad2(n) { return ('0' + n).slice(-2); }
+    function weekKey(number) { return '第' + number + '週'; }
+    function weekNumber(weekValue) {
+      var match = /^第(\d+)週$/.exec(weekValue || '');
+      return match ? Number(match[1]) : 1;
+    }
+    function weekStart(weekValue) {
+      var start = new Date(SCHOOL_WEEK_START);
+      start.setUTCDate(start.getUTCDate() + (weekNumber(weekValue) - 1) * 7);
+      return start;
+    }
+    function formatDate(d) {
+      return d.getUTCFullYear() + '-' + pad2(d.getUTCMonth() + 1) + '-' + pad2(d.getUTCDate());
+    }
+    function formatWeek(weekValue) {
+      var start = weekStart(weekValue);
+      var end = new Date(start);
+      end.setUTCDate(end.getUTCDate() + 6);
+      return weekValue + '｜' + formatDate(start) + '～' + formatDate(end);
+    }
+    function currentSchoolWeek() {
+      var now = new Date();
+      var today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+      var number = schoolWeekNumberToday();
+      number = Math.max(1, Math.min(SCHOOL_WEEK_COUNT, number));
+      return weekKey(number);
+    }
+    function schoolWeekNumberToday() {
+      var now = new Date();
+      var today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+      return Math.floor((today - SCHOOL_WEEK_START) / (7 * 86400000)) + 1;
+    }
+    function isPastWeek(weekValue) {
+      return weekNumber(weekValue) < schoolWeekNumberToday();
+    }
+    function populateWeekOptions(select, selected) {
+      select.innerHTML = '';
+      for (var i = 1; i <= SCHOOL_WEEK_COUNT; i++) {
+        var option = document.createElement('option');
+        option.value = weekKey(i);
+        option.textContent = formatWeek(option.value) + (isPastWeek(option.value) ? '（已過去）' : '');
+        option.disabled = isPastWeek(option.value);
+        select.appendChild(option);
+      }
+      select.value = selected || currentSchoolWeek();
+    }
+    function populateBorrowTypeOptions(select, types) {
+      select.innerHTML = '';
+      (types || BORROW_TYPES).forEach(function (type) {
+        var option = document.createElement('option');
+        option.value = type;
+        option.textContent = type === '平板' ? '平板（1～10 台）' : type;
+        select.appendChild(option);
+      });
+      select.value = '整台車';
+    }
+    function populateTabletCountOptions(select, maxCount) {
+      var max = Number(maxCount) || MAX_TABLET_COUNT;
+      select.innerHTML = '';
+      for (var i = 1; i <= max; i++) {
+        var option = document.createElement('option');
+        option.value = String(i);
+        option.textContent = i + ' 台';
+        select.appendChild(option);
+      }
+      select.value = '1';
+    }
+    function updateTabletCountVisibility() {
+      var isTablet = $('borrowType').value === '平板';
+      $('tabletCountBox').style.display = isTablet ? 'block' : 'none';
+      $('tabletCount').disabled = !isTablet;
+    }
+    function isBlockedSlot(weekday, period) {
+      return (weekday === '星期一' || weekday === '星期三') && BLOCKED_PERIODS.indexOf(period) !== -1;
+    }
+    function show(text, ok) { $('status').textContent = text; $('status').style.color = (ok === false ? '#c00' : '#1a7f37'); }
+    function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    function borrowingLabel(type, count) {
+      return type === '平板' ? '平板 ' + (Number(count) || 1) + ' 台' : '整台車';
+    }
+    function bookingLabel(row) {
+      return borrowingLabel(row.borrowType, row.tabletCount);
+    }
+
+    // 載入班級
+    google.script.run
+      .withSuccessHandler(function (cfg) {
+        var opts = '';
+        cfg.classes.forEach(function (c) { opts += '<option>' + esc(c) + '</option>'; });
+        $('className').innerHTML = opts;
+        BORROW_TYPES = cfg.borrowTypes || BORROW_TYPES;
+        MAX_TABLET_COUNT = Number(cfg.maxTabletCount) || MAX_TABLET_COUNT;
+        populateBorrowTypeOptions($('borrowType'), BORROW_TYPES);
+        populateTabletCountOptions($('tabletCount'), MAX_TABLET_COUNT);
+        updateTabletCountVisibility();
+      })
+      .withFailureHandler(function (err) { show('載入設定失敗：' + err.message, false); })
+      .getConfig();
+
+    populateWeekOptions($('week'), currentSchoolWeek());
+    $('borrowType').addEventListener('change', updateTabletCountVisibility);
+
+    // 畫整週節次表，每個格子代表「星期＋節次」
+    function renderGrid() {
+      var week = $('week').value;
+      var grid = $('grid');
+      grid.innerHTML = '';
+      if (!week) return;
+      $('weekInfo').textContent = formatWeek(week);
+
+      var thead = document.createElement('thead');
+      var hr = document.createElement('tr');
+      hr.appendChild(td('節次 / 時間', true));
+      DAYS.forEach(function (d) {
+        var th = document.createElement('th');
+        th.textContent = d.label;
+        hr.appendChild(th);
+      });
+      thead.appendChild(hr);
+      grid.appendChild(thead);
+
+      var tbody = document.createElement('tbody');
+      PERIODS.forEach(function (p) {
+        var tr = document.createElement('tr');
+        tr.appendChild(td(p.label + '<br>' + p.time, false, 'time'));
+        DAYS.forEach(function (d) {
+          var key = d.label + '|' + p.label;
+          var cell = document.createElement('td');
+          var blocked = isBlockedSlot(d.label, p.label);
+          cell.className = 'cell';
+          if (blocked) {
+            cell.className = 'cell blocked';
+            cell.textContent = '無法預約';
+          } else if (bookedMap[key]) {
+            cell.className = 'cell taken';
+            cell.textContent = bookedMap[key];
+          } else if (selectedWeekday === d.label && selectedPeriods.indexOf(p.label) !== -1) {
+            cell.className = 'cell selected';
+            cell.textContent = '已選';
+          }
+          if (!blocked) {
+            cell.addEventListener('click', function () {
+              if (bookedMap[key]) return;
+              if (selectedWeekday && selectedWeekday !== d.label) {
+                show('一次預約只能選同一天的多個節次', false);
+                return;
+              }
+              selectedWeekday = d.label;
+              var selectedIndex = selectedPeriods.indexOf(p.label);
+              if (selectedIndex === -1) selectedPeriods.push(p.label);
+              else selectedPeriods.splice(selectedIndex, 1);
+              if (!selectedPeriods.length) selectedWeekday = null;
+              renderGrid();
+            });
+          }
+          tr.appendChild(cell);
+        });
+        tbody.appendChild(tr);
+      });
+      grid.appendChild(tbody);
+    }
+    function td(html, isHead, cls) {
+      var el = document.createElement(isHead ? 'th' : 'td');
+      if (cls) el.className = cls;
+      el.innerHTML = html;
+      return el;
+    }
+
+    // 讀取本週已預約
+    function refresh() {
+      var week = $('week').value || currentSchoolWeek();
+      $('week').value = week;
+      selectedWeekday = null;
+      selectedPeriods = [];
+      bookedMap = {};
+      google.script.run
+        .withSuccessHandler(function (rows) {
+          rows.forEach(function (r) {
+            bookedMap[r.weekday + '|' + r.period] = r.className + '（' + bookingLabel(r) + '）';
+          });
+          renderGrid();
+        })
+        .withFailureHandler(function (err) { show('讀取失敗：' + err.message, false); })
+        .getBookings(week);
+    }
+    $('week').addEventListener('change', refresh);
+    $('btnRefresh').addEventListener('click', function () {
+      $('week').value = currentSchoolWeek();
+      refresh();
+    });
+    refresh();
+
+    // 各班使用狀況長條圖
+    function loadUsageStats() {
+      google.script.run
+        .withSuccessHandler(renderUsageChart)
+        .withFailureHandler(function (err) {
+          $('usageStatus').textContent = '統計讀取失敗';
+          var chart = $('usageChart');
+          chart.innerHTML = '';
+          var message = document.createElement('p');
+          message.className = 'usage-empty';
+          message.textContent = '無法讀取統計：' + ((err && err.message) || '未知錯誤');
+          chart.appendChild(message);
+        })
+        .getUsageStats();
+    }
+
+    function renderUsageChart(rows) {
+      var chart = $('usageChart');
+      chart.innerHTML = '';
+      var stats = Array.isArray(rows) ? rows : [];
+      if (!stats.length) {
+        $('usageStatus').textContent = '目前沒有預約資料';
+        var empty = document.createElement('p');
+        empty.className = 'usage-empty';
+        empty.textContent = '目前沒有可顯示的預約紀錄';
+        chart.appendChild(empty);
+        return;
+      }
+      var max = 1;
+      var total = 0;
+      stats.forEach(function (item) {
+        var count = Number(item.count) || 0;
+        max = Math.max(max, count);
+        total += count;
+      });
+      $('usageStatus').textContent = '共 ' + total + ' 個預約節次';
+      stats.forEach(function (item) {
+        var count = Number(item.count) || 0;
+        var row = document.createElement('div');
+        row.className = 'usage-row';
+        row.setAttribute('aria-label', item.className + '：' + count + ' 個預約節次');
+        var label = document.createElement('span');
+        label.className = 'usage-label';
+        label.textContent = item.className;
+        var track = document.createElement('div');
+        track.className = 'usage-track';
+        var bar = document.createElement('div');
+        bar.className = 'usage-bar';
+        bar.style.width = (count / max * 100) + '%';
+        track.appendChild(bar);
+        var value = document.createElement('span');
+        value.className = 'usage-value';
+        value.textContent = count + ' 節';
+        row.appendChild(label);
+        row.appendChild(track);
+        row.appendChild(value);
+        chart.appendChild(row);
+      });
+    }
+
+    loadUsageStats();
+
+    // 送出預約
+    $('btnSubmit').addEventListener('click', function () {
+      var week = $('week').value;
+      var className = $('className').value;
+      var borrowType = $('borrowType').value;
+      var tabletCount = borrowType === '平板' ? Number($('tabletCount').value) : 0;
+      var purpose = $('purpose').value.trim();
+      if (!week) { show('請選擇週次', false); return; }
+      if (!selectedWeekday || !selectedPeriods.length) { show('請先點選同一天的節次格子', false); return; }
+      if (!borrowType) { show('請選擇借用方式', false); return; }
+      if (borrowType === '平板' && (!tabletCount || tabletCount < 1 || tabletCount > MAX_TABLET_COUNT)) {
+        show('請選擇 1～' + MAX_TABLET_COUNT + ' 台平板', false);
+        return;
+      }
+      if (!purpose) { show('請填寫用途，例如：數學 Kahoot 或社會 Padlet', false); return; }
+      $('btnSubmit').disabled = true;
+      show('送出中…');
+      google.script.run
+        .withSuccessHandler(function (res) {
+          $('btnSubmit').disabled = false;
+          if (res && res.ok) {
+            $('purpose').value = '';
+            show('預約成功，共 ' + selectedPeriods.length + ' 節，每節 ' + borrowingLabel(res.borrowType || borrowType, res.tabletCount || tabletCount));
+            refresh();
+            loadUsageStats();
+          } else {
+            show('送出失敗：' + ((res && res.error) || '未知原因'), false);
+          }
+        })
+        .withFailureHandler(function (err) {
+          $('btnSubmit').disabled = false;
+          show('送出失敗：' + err.message, false);
+        })
+        .submitBookings({
+          week: week,
+          weekday: selectedWeekday,
+          periods: selectedPeriods,
+          className: className,
+          borrowType: borrowType,
+          tabletCount: tabletCount,
+          purpose: purpose
+        });
+    });
+  </script>
+</body>
+</html>

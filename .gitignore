@@ -1,0 +1,22 @@
+# 敏感資訊與憑證金鑰（絕對禁止上傳）
+憑證*
+*憑證*
+credentials*
+!credentials.example.txt
+*.key
+*.pem
+.env
+.env.*
+*.secret
+
+# 本機工具與暫存檔案
+.playwright-mcp/
+node_modules/
+.vscode/
+.idea/
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+*.log

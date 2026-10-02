@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>LINE Rich Menu</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      width: 2500px;
+      height: 1686px;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+      background: #f4f7f6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      width: 2500px;
+      height: 1686px;
+      gap: 3px;
+      background: #b2dfdb;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    /* 6 格專屬配色：精緻漸層、清新護眼 */
+    .c1 { background: linear-gradient(145deg, #ffffff, #e8f5e9); }
+    .c2 { background: linear-gradient(145deg, #ffffff, #e0f2f1); }
+    .c3 { background: linear-gradient(145deg, #ffffff, #e1f5fe); }
+    .c4 { background: linear-gradient(145deg, #ffffff, #fffde7); }
+    .c5 { background: linear-gradient(145deg, #ffffff, #ede7f6); }
+    .c6 { background: linear-gradient(145deg, #ffffff, #fbe9e7); }
+
+    .badge {
+      position: absolute;
+      top: 50px;
+      right: 50px;
+      font-size: 28px;
+      font-weight: 800;
+      padding: 10px 24px;
+      border-radius: 999px;
+      letter-spacing: 1px;
+    }
+    .b-hot { background: #ff5722; color: #fff; box-shadow: 0 4px 12px rgba(255,87,34,0.3); }
+    .b-live { background: #2e7d32; color: #fff; box-shadow: 0 4px 12px rgba(46,125,50,0.3); }
+    .b-tool { background: #0288d1; color: #fff; box-shadow: 0 4px 12px rgba(2,136,209,0.3); }
+
+    .icon-box {
+      width: 200px;
+      height: 200px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 105px;
+      margin-bottom: 35px;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.07);
+    }
+    .i1 { background: linear-gradient(135deg, #4caf50, #2e7d32); color: #fff; }
+    .i2 { background: linear-gradient(135deg, #26a69a, #00796b); color: #fff; }
+    .i3 { background: linear-gradient(135deg, #29b6f6, #0288d1); color: #fff; }
+    .i4 { background: linear-gradient(135deg, #ffca28, #f57f17); color: #fff; }
+    .i5 { background: linear-gradient(135deg, #7e57c2, #512da8); color: #fff; }
+    .i6 { background: linear-gradient(135deg, #ff7043, #d84315); color: #fff; }
+
+    .title {
+      font-size: 68px;
+      font-weight: 900;
+      color: #212121;
+      margin-bottom: 18px;
+      letter-spacing: 2px;
+    }
+    .subtitle {
+      font-size: 38px;
+      font-weight: 600;
+      color: #616161;
+      letter-spacing: 1px;
+    }
+    .tag {
+      margin-top: 24px;
+      font-size: 32px;
+      font-weight: 700;
+      padding: 8px 30px;
+      border-radius: 14px;
+    }
+    .t1 { background: #c8e6c9; color: #1b5e20; }
+    .t2 { background: #b2dfdb; color: #004d40; }
+    .t3 { background: #b3e5fc; color: #01579b; }
+    .t4 { background: #fff9c4; color: #f57f17; }
+    .t5 { background: #d1c4e9; color: #311b92; }
+    .t6 { background: #ffccbc; color: #bf360c; }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <!-- 格子 1: 預約明天 -->
+    <div class="card c1">
+      <div class="badge b-hot">最常用</div>
+      <div class="icon-box i1">⚡</div>
+      <div class="title">預約明天</div>
+      <div class="subtitle">點擊一鍵選節次借用</div>
+      <div class="tag t1">極速登記</div>
+    </div>
+
+    <!-- 格子 2: 查今天空堂 -->
+    <div class="card c2">
+      <div class="badge b-live">燈號</div>
+      <div class="icon-box i2">🟢</div>
+      <div class="title">查今天空堂</div>
+      <div class="subtitle">即時看各節借用燈號</div>
+      <div class="tag t2">今天現況</div>
+    </div>
+
+    <!-- 格子 3: 查明天空堂 -->
+    <div class="card c3">
+      <div class="badge b-live">燈號</div>
+      <div class="icon-box i3">🟢</div>
+      <div class="title">查明天空堂</div>
+      <div class="subtitle">提早確認哪些節有空</div>
+      <div class="tag t3">明天現況</div>
+    </div>
+
+    <!-- 格子 4: 查本週預約 -->
+    <div class="card c4">
+      <div class="icon-box i4">📅</div>
+      <div class="title">查本週預約</div>
+      <div class="subtitle">查看整週公開預約清單</div>
+      <div class="tag t4">公開課表</div>
+    </div>
+
+    <!-- 格子 5: 查我的預約 -->
+    <div class="card c5">
+      <div class="icon-box i5">🔍</div>
+      <div class="title">查我的預約</div>
+      <div class="subtitle">查詢自己班級已借節次</div>
+      <div class="tag t5">班級紀錄</div>
+    </div>
+
+    <!-- 格子 6: 設定常用班級 -->
+    <div class="card c6">
+      <div class="badge b-tool">免重打</div>
+      <div class="icon-box i6">🏫</div>
+      <div class="title">設定常用班級</div>
+      <div class="subtitle">綁定後說一句話直接借</div>
+      <div class="tag t6">導師專用</div>
+    </div>
+  </div>
+</body>
+</html>
